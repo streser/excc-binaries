@@ -28,9 +28,11 @@ install:
   # Build exccd, exccctl and exccwallet
   - cd %GOPATH%\\src\\github.com\\EXCCoin\\exccd
   - dep ensure
+  - ps: '(Get-Content cequihash\solver.go).replace("#cgo", "#cgo LDFLAGS: -l  ws2_32`n#cgo") | Set-Content cequihash\solver.go'
   - go install . ./cmd/exccctl/
   - cd ../exccwallet
   - dep ensure
+  - ps: '(Get-Content vendor\github.com\EXCCoin\exccd\cequihash\solver.go).replace("#cgo", "#cgo LDFLAGS: -l  ws2_32`n#cgo") | Set-Content vendor\github.com\EXCCoin\exccd\cequihash\solver.go'
   - go install
   - cd ../exilibrium
   # Copy binaries to exilibrium
