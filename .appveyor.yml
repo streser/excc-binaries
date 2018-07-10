@@ -26,9 +26,12 @@ install:
   - go get -u github.com/golang/dep/cmd/dep
   - cd %GOPATH%\\src\\github.com\\EXCCoin\\exccd
   - dep ensure
+  - ps: '(Get-Content cequihash\solver.go).replace("#cgo", "#cgo LDFLAGS: -l  ws2_32`n#cgo") | Set-Content cequihash\solver.go'
   - go install . ./cmd/exccctl/
   - cd ../exccwallet
+  - ps: '(Get-Content Gopkg.lock).replace("52bc0d00e74282341e04f6898c893290a220de66", "8820306d08fc43099ae34b0823609451d8fc8b20") | Set-Content Gopkg.lock'
   - dep ensure
+  - ps: '(Get-Content vendor\github.com\EXCCoin\exccd\cequihash\solver.go).replace("#cgo", "#cgo LDFLAGS: -l  ws2_32`n#cgo") | Set-Content vendor\github.com\EXCCoin\exccd\cequihash\solver.go'
   - go install
   - cd ../exilibrium
   - mkdir bin
